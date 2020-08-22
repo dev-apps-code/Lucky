@@ -20,7 +20,7 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-export default class HomeTabs extends Component {
+export default class BetTabs extends Component {
   componentDidMount() {}
 
   render() {
@@ -55,6 +55,8 @@ export default class HomeTabs extends Component {
             });
           };
 
+          let textStyle= isFocused ? styles.activeTabText : styles.nonActiveTabText
+
           return (
             <TouchableOpacity
               key={index}
@@ -66,7 +68,8 @@ export default class HomeTabs extends Component {
               onLongPress={onLongPress}
               style={{alignItems:'center'}}
               >
-              <Text style={styles.tabText}>{label.toUpperCase()}</Text>
+              <Text style={textStyle}>{label}</Text>
+
               <LinearGradient
                 colors={GRADIENT_COLOR_SET_2.COLORS}
                 locations={GRADIENT_COLOR_SET_2.LOCATIONS}
@@ -88,13 +91,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: DEVICE_WIDTH * 0.03,
   },
-  tabText: {
+  activeTabText: {
     fontSize: DEVICE_HEIGHT * 0.025,
-    color: '#FFFFFF',
-    fontFamily: 'LATO-REGULAR',
+    color: '#6D9773',
+    fontFamily: 'Alata-Regular',
+  },
+  nonActiveTabText: {
+    fontSize: DEVICE_HEIGHT * 0.025,
+    color: '#D7D7D7',
+    fontFamily: 'Alata-Regular',
   },
   tabView: {
-    backgroundColor: THEME_COLOR_1,
+    backgroundColor: '#FFFFFF',
     paddingVertical: DEVICE_HEIGHT * 0.01,
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
   },
   activeTabView: {
     marginTop: DEVICE_HEIGHT * 0.01,
-    borderBottomColor: '#94ceda',
+    borderBottomColor: '#6D9773',
     borderBottomWidth: 3,
     width: DEVICE_WIDTH * 0.1,
   },

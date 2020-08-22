@@ -27,4 +27,3 @@ export const GRADIENT_COLOR_SET_2 = {
 export const ALPHA = window.width / 375;
 export const FONT_ALPHA = (window.width / 375) * 0.84;
 
-export const LOGIN_BG = require('../assets/images/LOGIN_BG.jpg');

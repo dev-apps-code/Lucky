@@ -10,13 +10,13 @@ import {
 
 //redux
 import {connect} from 'react-redux';
-import {login} from '../../redux/actions/account';
+import {login} from '../../../redux/actions/account';
 
 //api
-import {POST, GET} from '../../api/service/service';
-import {URL} from '../../constants/apirUrls';
+import {POST, GET} from '../../../api/service/service';
+import {URL} from '../../../constants/apirUrls';
 
-class Bet extends Component {
+class Suertres extends Component {
   constructor(props) {
     super(props);
     this.state = this._getState();
@@ -33,7 +33,7 @@ class Bet extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-          <Text>1</Text>
+          <Text>2</Text>
       </View>
     );
   }
@@ -61,4 +61,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Bet);
+export default connect(mapStateToProps, mapDispatchToProps)(Suertres);

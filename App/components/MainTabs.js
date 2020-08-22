@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import HomeActive from '../assets/svg/Home.svg';
 import HomeInactive from '../assets/svg/Home - Inactive.svg';
 import CategoriesActive from '../assets/svg/Categories.svg';
@@ -21,24 +21,7 @@ import {
 export default class MainTabs extends Component {
   componentDidMount() {
     this.props.navigation.setOptions({
-      title: null,
-      headerShown: true,
-      headerStyle: {
-        backgroundColor: THEME_COLOR_1,
-        elevation: 0,
-        shadowOpacity: 0,
-      },
-      headerRight: ({navigate}) => (
-        <TouchableOpacity
-          // onPress={this.onPressSettings}
-          style={styles.settingsButton}>
-          <Settings
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
-          />
-        </TouchableOpacity>
-      ),
-      headerLeft: null,
+      headerShown: false,
     });
   }
 
@@ -46,50 +29,50 @@ export default class MainTabs extends Component {
     switch (tabID) {
       case 0:
         return isFocused ? (
-          <HomeActive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.activeIcon}
+            source={require('../assets/images/account.png')}
           />
         ) : (
-          <HomeInactive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.inactiveIcon}
+            source={require('../assets/images/account.png')}
           />
         );
       case 1:
         return isFocused ? (
-          <SearchActive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.activeIcon}
+            source={require('../assets/images/bet.png')}
           />
         ) : (
-          <SearchInactive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.inactiveIcon}
+            source={require('../assets/images/bet.png')}
           />
         );
       case 2:
         return isFocused ? (
-          <CategoriesActive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.activeIcon}
+            source={require('../assets/images/send.png')}
           />
         ) : (
-          <CategoriesInactive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.inactiveIcon}
+            source={require('../assets/images/send.png')}
           />
         );
       case 3:
         return isFocused ? (
-          <LibraryActive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.activeIcon}
+            source={require('../assets/images/history.png')}
           />
         ) : (
-          <LibraryInactive
-            width={BOTTOM_TAB_ICON_WIDTH}
-            height={BOTTOM_TAB_ICON_HEIGHT}
+          <Image
+            style={styles.inactiveIcon}
+            source={require('../assets/images/history.png')}
           />
         );
       default:
@@ -118,56 +101,6 @@ export default class MainTabs extends Component {
             });
 
             if (!isFocused && !event.defaultPrevented) {
-              if (index == 0) {
-                this.props.navigation.setOptions({
-                  title: null,
-                  headerShown: true,
-                  headerStyle: {
-                    backgroundColor: THEME_COLOR_1,
-                    elevation: 0,
-                    shadowOpacity: 0,
-                  },
-                  headerRight: ({navigate}) => (
-                    <TouchableOpacity
-                      // onPress={this.onPressSettings}
-                      style={styles.settingsButton}>
-                      <Settings
-                        width={BOTTOM_TAB_ICON_WIDTH}
-                        height={BOTTOM_TAB_ICON_HEIGHT}
-                      />
-                    </TouchableOpacity>
-                  ),
-                  headerLeft: null,
-                });
-              } else {
-                navigation.setOptions({
-                  headerShown: false,
-                });
-              }
-              // index == 3
-              //   ? navigation.setOptions({
-              //       headerShown: false,
-              //     })
-              //   : navigation.setOptions({
-              //       title: null,
-              //       headerShown: true,
-              //       headerStyle: {
-              //         backgroundColor: THEME_COLOR_1,
-              //         elevation: 0,
-              //         shadowOpacity: 0,
-              //       },
-              //       headerRight: ({navigate}) => (
-              //         <TouchableOpacity
-              //           // onPress={this.onPressSettings}
-              //           style={styles.settingsButton}>
-              //           <Settings
-              //             width={BOTTOM_TAB_ICON_WIDTH}
-              //             height={BOTTOM_TAB_ICON_HEIGHT}
-              //           />
-              //         </TouchableOpacity>
-              //       ),
-              //       headerLeft: null,
-              //     });
               navigation.navigate(route.name);
             }
           };
@@ -181,6 +114,7 @@ export default class MainTabs extends Component {
 
           return (
             <TouchableOpacity
+              style={styles.iconContainer}
               key={index}
               accessibilityRole="button"
               accessibilityStates={isFocused ? ['selected'] : []}
@@ -205,17 +139,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: DEVICE_WIDTH * 0.03,
   },
-  iconButton: {
-    borderRadius: 50,
-    borderWidth: 2,
-    height: DEVICE_HEIGHT * 0.03,
-    width: DEVICE_HEIGHT * 0.03,
+  inactiveIcon: {
+    tintColor: '#D7D7D7',
+    width: DEVICE_WIDTH * 0.07,
+    resizeMode: 'contain',
+  },
+  activeIcon: {
+    tintColor: '#6D9773',
+    width: DEVICE_WIDTH * 0.07,
+    resizeMode: 'contain',
+  },
+  iconContainer: {
+    // backgroundColor: '#F0F0F0',
+    height: DEVICE_WIDTH * 0.15,
+    width: DEVICE_WIDTH * 0.15,
+    borderRadius: DEVICE_WIDTH * 0.1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   tabView: {
-    backgroundColor: 'black',
     paddingVertical: DEVICE_HEIGHT * 0.01,
+    backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingHorizontal: DEVICE_WIDTH * 0.01,
+    borderTopWidth: DEVICE_HEIGHT * 0.001,
+    borderTopColor: '#F0F0F0',
   },
 });

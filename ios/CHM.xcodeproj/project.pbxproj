@@ -22,6 +22,7 @@
 		E9747E6D43A91933E07ADFA7 /* libPods-CHM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C092CF22964663415AA442C /* libPods-CHM.a */; };
 		C67ED42C7AB4485A8A6167A2 /* LATO-BOLD.TTF in Resources */ = {isa = PBXBuildFile; fileRef = F90CF0E36869401BA677A64F /* LATO-BOLD.TTF */; };
 		E5A9689820994359AF8E2AA9 /* LATO-REGULAR.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 61612BF7846B41ACBD192CCA /* LATO-REGULAR.TTF */; };
+		0C9C15AF62FD4F19A963A711 /* Alata-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F01FDFF465649279E8479BC /* Alata-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F90CF0E36869401BA677A64F /* LATO-BOLD.TTF */ = {isa = PBXFileReference; name = "LATO-BOLD.TTF"; path = "../App/assets/fonts/LATO-BOLD.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		61612BF7846B41ACBD192CCA /* LATO-REGULAR.TTF */ = {isa = PBXFileReference; name = "LATO-REGULAR.TTF"; path = "../App/assets/fonts/LATO-REGULAR.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3F01FDFF465649279E8479BC /* Alata-Regular.ttf */ = {isa = PBXFileReference; name = "Alata-Regular.ttf"; path = "../App/assets/fonts/Alata-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 			children = (
 				F90CF0E36869401BA677A64F /* LATO-BOLD.TTF */,
 				61612BF7846B41ACBD192CCA /* LATO-REGULAR.TTF */,
+				3F01FDFF465649279E8479BC /* Alata-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C67ED42C7AB4485A8A6167A2 /* LATO-BOLD.TTF in Resources */,
 				E5A9689820994359AF8E2AA9 /* LATO-REGULAR.TTF in Resources */,
+				0C9C15AF62FD4F19A963A711 /* Alata-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
