@@ -121,20 +121,6 @@ class Lastwo extends Component {
     });
   };
 
-  // renderItem = ({item, index}) => {
-  //   // console.log(item)
-  //   return (
-  //     <View style={styles.digitContainer}>
-  //       <Text style={styles.digit}>{item.digit} : </Text>
-  //       <TouchableOpacity
-  //         onPress={() => this.itemPressed(item, index)}
-  //         style={styles.betContainer}>
-  //         <Text style={styles.bet}> {item.bet_amount}</Text>
-  //       </TouchableOpacity>
-  //     </View>
-  //   );
-  // };
-
   toggleModal = () => {
     this.setState({
       modalVisible: !this.state.modalVisible,
@@ -180,21 +166,6 @@ class Lastwo extends Component {
 
   modifyItem = () => {};
 
-  renderItem = (data) => {
-    const list = data.map((item, index) => {
-      let data = {
-        item,
-        index,
-      };
-      let returnItem =
-        item.bet_amount > 0 ? <BetItem data={data} key={index} /> : null;
-      // return <BetItem data={data} key={index} />;
-      return returnItem;
-    });
-
-    return list;
-  };
-
   render() {
     let {data, loading, modalVisible} = this.state;
     return (
@@ -214,7 +185,7 @@ class Lastwo extends Component {
         <View style={styles.listContainer}>
           <ScrollView>
             {!loading ? (
-              this.renderItem(data)
+              <BetItem data={data} />
             ) : (
               <ActivityIndicator size="large" color="#FFBA00" />
             )}
@@ -242,56 +213,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgb(228, 228, 228)',
   },
-
-  digit: {
-    fontSize: DEVICE_HEIGHT * 0.025,
-    color: '#6D9773',
-    fontFamily: 'Alata-Regular',
-    fontWeight: 'bold',
-  },
-  bet: {
-    fontSize: DEVICE_HEIGHT * 0.025,
-    color: '#0C3B2E',
-    fontFamily: 'Alata-Regular',
-    fontWeight: 'bold',
-  },
-  betContainer: {
-    borderBottomColor: '#6D9773',
-    // borderLeftColor: '#6D9773',
-    // borderLeftWidth:1,
-    borderBottomWidth: 1,
-    flex: 1,
-  },
-  digitContainer: {
-    // flexDirection: 'row',
-    backgroundColor: '#FBFBFB',
-    width: DEVICE_WIDTH * 0.23,
-    marginBottom: DEVICE_HEIGHT * 0.03,
-    marginRight: DEVICE_WIDTH * 0.015,
-    // justifyContent: 'center',
-    paddingRight: DEVICE_WIDTH * 0.02,
-  },
-  modalMain: {
+  modifyView: {
     height: '100%',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modifyView: {
-    height: DEVICE_HEIGHT * 0.5,
-    width: DEVICE_WIDTH * 0.85,
-  },
-
-  modifyText: {
-    fontSize: DEVICE_HEIGHT * 0.1,
-    color: '#0C3B2E',
-    fontFamily: 'Alata-Regular',
-    fontWeight: 'bold',
+    alignItems:'center'
   },
   modifyButton: {
     height: DEVICE_HEIGHT * 0.08,
-    width: DEVICE_WIDTH * 0.7,
+    width: DEVICE_WIDTH * 0.6,
     borderRadius: 5,
     backgroundColor: '#6D9773',
     alignItems: 'center',
@@ -311,8 +240,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginRight: DEVICE_WIDTH * 0.03,
   },
-
-  //new
   typeContainer: {
     flexDirection: 'row',
     height: DEVICE_HEIGHT * 0.06,
@@ -363,7 +290,7 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_HEIGHT * 0.05,
     height: DEVICE_HEIGHT * 0.05,
     padding: 0,
-    textAlign:'center'
+    textAlign: 'center',
   },
 
   inputLabelText: {
@@ -375,7 +302,7 @@ const styles = StyleSheet.create({
 
   modifySubView: {
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     height: DEVICE_HEIGHT * 0.1,
     width: DEVICE_WIDTH * 0.3,
   },
