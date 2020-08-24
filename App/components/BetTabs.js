@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
-import HomeActive from '../assets/svg/Home.svg';
-import HomeInactive from '../assets/svg/Home - Inactive.svg';
-import CategoriesActive from '../assets/svg/Categories.svg';
-import CategoriesInactive from '../assets/svg/Categories - Inactive.svg';
-import SearchActive from '../assets/svg/Search.svg';
-import SearchInactive from '../assets/svg/Search - Inactive.svg';
-import LibraryActive from '../assets/svg/Library.svg';
-import LibraryInactive from '../assets/svg/Library - Inactive.svg';
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
@@ -55,7 +47,9 @@ export default class BetTabs extends Component {
             });
           };
 
-          let textStyle= isFocused ? styles.activeTabText : styles.nonActiveTabText
+          let textStyle = isFocused
+            ? styles.activeTabText
+            : styles.nonActiveTabText;
 
           return (
             <TouchableOpacity
@@ -66,14 +60,13 @@ export default class BetTabs extends Component {
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={{alignItems:'center'}}
-              >
+              style={styles.tabContainer}>
               <Text style={textStyle}>{label}</Text>
 
               <LinearGradient
                 colors={GRADIENT_COLOR_SET_2.COLORS}
                 locations={GRADIENT_COLOR_SET_2.LOCATIONS}
-                style={isFocused ? styles.activeTabView : null} 
+                style={isFocused ? styles.activeTabView : null}
               />
             </TouchableOpacity>
           );
@@ -91,6 +84,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: DEVICE_WIDTH * 0.03,
   },
+  tabContainer: {
+    alignItems: 'center',
+  },
   activeTabText: {
     fontSize: DEVICE_HEIGHT * 0.025,
     color: '#6D9773',
@@ -103,10 +99,12 @@ const styles = StyleSheet.create({
   },
   tabView: {
     backgroundColor: '#FFFFFF',
-    paddingVertical: DEVICE_HEIGHT * 0.01,
+    paddingTop: DEVICE_HEIGHT * 0.01,
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingHorizontal: DEVICE_WIDTH * 0.01,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F1F1',
   },
   activeTabView: {
     marginTop: DEVICE_HEIGHT * 0.01,

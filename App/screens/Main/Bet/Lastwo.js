@@ -10,6 +10,7 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 
 //redux
@@ -22,8 +23,9 @@ import {URL} from '../../../constants/apirUrls';
 
 //storage
 import {store, retrieve} from '../../../storage';
+import BetItem from '../../../components/betItem';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../../../constants/constants';
-import Modal, {SlideAnimation, ModalContent} from 'react-native-modals';
+import Modal, {ModalContent} from 'react-native-modals';
 
 class Lastwo extends Component {
   _isMounted = false;
@@ -44,8 +46,11 @@ class Lastwo extends Component {
     this._isMounted ? this.initData() : null;
 
     //cheat code force restart data
-    // this.createInitialData();
+    // this._isMounted = true;
+    // this._isMounted ? this.createInitialData() : null;
   }
+
+  componentWillUnmount() {}
 
   componentWillUnmount() {
     this._isMounted = false;
@@ -78,8 +83,23 @@ class Lastwo extends Component {
     for (let i = 0; i < 100; ++i) {
       let digit = i < 10 ? '0' + i.toString() : i.toString();
 
+      // testing
+      if (digit == '44') {
+        arr.push({digit, bet_amount: 4444});
+      }
+      if (digit == '23') {
+        arr.push({digit, bet_amount: 32143123});
+      }
+
+      if (digit == '65') {
+        arr.push({digit, bet_amount: 42526});
+      }
+      if (digit == '78') {
+        arr.push({digit, bet_amount: 441344});
+      }
       arr.push({digit, bet_amount: 0});
     }
+    arr;
     let JSONarr = JSON.stringify(arr);
     //async storage configuration lastwo
     let data = {
@@ -101,19 +121,19 @@ class Lastwo extends Component {
     });
   };
 
-  renderItem = ({item, index}) => {
-    // console.log(item)
-    return (
-      <View style={styles.digitContainer}>
-        <Text style={styles.digit}>{item.digit} : </Text>
-        <TouchableOpacity
-          onPress={() => this.itemPressed(item, index)}
-          style={styles.betContainer}>
-          <Text style={styles.bet}> {item.bet_amount}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  // renderItem = ({item, index}) => {
+  //   // console.log(item)
+  //   return (
+  //     <View style={styles.digitContainer}>
+  //       <Text style={styles.digit}>{item.digit} : </Text>
+  //       <TouchableOpacity
+  //         onPress={() => this.itemPressed(item, index)}
+  //         style={styles.betContainer}>
+  //         <Text style={styles.bet}> {item.bet_amount}</Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // };
 
   toggleModal = () => {
     this.setState({
@@ -128,15 +148,26 @@ class Lastwo extends Component {
     let digit = selected.digit;
     return (
       <View style={styles.modifyView}>
-        <View style={styles.modifyDigitView}>
-          <Text style={styles.modifyText}>{digit}</Text>
-          <Text>Digit</Text>
+        <View style={{flexDirection: 'row', width: DEVICE_WIDTH * 0.7}}>
+          <View style={styles.modifySubView}>
+            <TextInput
+              style={styles.input}
+              keyboardType={'number-pad'}
+              maxLength={2}
+            />
+            <Text style={styles.inputLabelText}>Digit</Text>
+          </View>
+          <View style={styles.modifySubView}>
+            <TextInput
+              style={[styles.input, {width: DEVICE_WIDTH * 0.3}]}
+              keyboardType={'number-pad'}
+            />
+            <Text style={styles.inputLabelText}>Amount</Text>
+          </View>
         </View>
-        <View style={styles.modifyAmountView}>
-          <Text style={styles.modifyText}>{betAmount}000000</Text>
-          <Text>Total Bet Amount</Text>
-        </View>
-        <TouchableOpacity style={styles.modifyButton}>
+        <TouchableOpacity
+          style={styles.modifyButton}
+          onPress={() => this.toggleModal()}>
           <Image
             style={styles.modifyIcon}
             source={require('../../../assets/images/edit.png')}
@@ -147,23 +178,47 @@ class Lastwo extends Component {
     );
   };
 
+  modifyItem = () => {};
+
+  renderItem = (data) => {
+    const list = data.map((item, index) => {
+      let data = {
+        item,
+        index,
+      };
+      let returnItem =
+        item.bet_amount > 0 ? <BetItem data={data} key={index} /> : null;
+      // return <BetItem data={data} key={index} />;
+      return returnItem;
+    });
+
+    return list;
+  };
+
   render() {
     let {data, loading, modalVisible} = this.state;
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.listContainer}>
-          {!loading ? (
-            <FlatList
-              renderItem={this.renderItem}
-              data={data}
-              // style={styles.listContainer}
-              refreshing={loading}
-              keyExtractor={(item, index) => index.toString()}
-              numColumns={4}
+        <View style={styles.optionsView}>
+          <TouchableOpacity onPress={() => this.toggleModal()}>
+            <Image
+              style={styles.addIcon}
+              source={require('../../../assets/images/add.png')}
             />
-          ) : (
-            <ActivityIndicator size="large" color="#FFBA00" />
-          )}
+          </TouchableOpacity>
+        </View>
+        <View style={styles.typeContainer}>
+          <Text style={styles.typeText}>Digit</Text>
+          <Text style={styles.typeText}>Amount</Text>
+        </View>
+        <View style={styles.listContainer}>
+          <ScrollView>
+            {!loading ? (
+              this.renderItem(data)
+            ) : (
+              <ActivityIndicator size="large" color="#FFBA00" />
+            )}
+          </ScrollView>
         </View>
         {!loading && (
           <Modal
@@ -171,7 +226,9 @@ class Lastwo extends Component {
             onTouchOutside={() => {
               this.toggleModal();
             }}>
-            <ModalContent>{this.renderModifyModal()}</ModalContent>
+            <ModalContent style={styles.modalContentView}>
+              {this.renderModifyModal()}
+            </ModalContent>
           </Modal>
         )}
       </View>
@@ -183,15 +240,9 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(228, 228, 228)',
   },
-  listContainer: {
-    height: DEVICE_HEIGHT * 0.75,
-    width: DEVICE_WIDTH * 0.95,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   digit: {
     fontSize: DEVICE_HEIGHT * 0.025,
     color: '#6D9773',
@@ -231,15 +282,7 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT * 0.5,
     width: DEVICE_WIDTH * 0.85,
   },
-  modifyDigitView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modifyAmountView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
+
   modifyText: {
     fontSize: DEVICE_HEIGHT * 0.1,
     color: '#0C3B2E',
@@ -247,13 +290,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   modifyButton: {
-    height: DEVICE_HEIGHT * 0.1,
-    width: DEVICE_WIDTH * 0.85,
+    height: DEVICE_HEIGHT * 0.08,
+    width: DEVICE_WIDTH * 0.7,
     borderRadius: 5,
     backgroundColor: '#6D9773',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection:'row'
+    flexDirection: 'row',
+    marginTop: DEVICE_HEIGHT * 0.05,
   },
   modifyButtonText: {
     fontSize: DEVICE_HEIGHT * 0.025,
@@ -265,8 +309,81 @@ const styles = StyleSheet.create({
     tintColor: '#FFFFFF',
     width: DEVICE_WIDTH * 0.07,
     resizeMode: 'contain',
-    marginRight: DEVICE_WIDTH * 0.03
-  }
+    marginRight: DEVICE_WIDTH * 0.03,
+  },
+
+  //new
+  typeContainer: {
+    flexDirection: 'row',
+    height: DEVICE_HEIGHT * 0.06,
+    marginTop: DEVICE_HEIGHT * 0.01,
+    width: DEVICE_WIDTH * 0.95,
+    borderTopLeftRadius: DEVICE_HEIGHT * 0.03,
+    borderTopRightRadius: DEVICE_HEIGHT * 0.03,
+    justifyContent: 'space-around',
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    borderBottomColor: '#F1F1F1',
+    borderBottomWidth: 1,
+  },
+  listContainer: {
+    maxHeight: DEVICE_HEIGHT * 0.68,
+    width: DEVICE_WIDTH * 0.95,
+    borderBottomLeftRadius: DEVICE_HEIGHT * 0.03,
+    borderBottomRightRadius: DEVICE_HEIGHT * 0.03,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: DEVICE_HEIGHT * 0.02,
+  },
+  optionsView: {
+    height: DEVICE_HEIGHT * 0.07,
+    width: DEVICE_WIDTH * 1,
+    backgroundColor: 'white',
+    paddingHorizontal: DEVICE_WIDTH * 0.025,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  typeText: {
+    fontSize: DEVICE_HEIGHT * 0.03,
+    color: '#0C3B2E',
+    fontFamily: 'Alata-Regular',
+    fontWeight: 'bold',
+  },
+
+  addIcon: {
+    tintColor: '#6D9773',
+    width: DEVICE_WIDTH * 0.07,
+    resizeMode: 'contain',
+  },
+
+  input: {
+    width: DEVICE_WIDTH * 0.1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#6D9773',
+    fontSize: DEVICE_HEIGHT * 0.05,
+    height: DEVICE_HEIGHT * 0.05,
+    padding: 0,
+    textAlign:'center'
+  },
+
+  inputLabelText: {
+    fontSize: DEVICE_HEIGHT * 0.03,
+    color: '#0C3B2E',
+    fontFamily: 'Alata-Regular',
+    fontWeight: 'bold',
+  },
+
+  modifySubView: {
+    alignItems: 'center',
+    justifyContent:'center',
+    height: DEVICE_HEIGHT * 0.1,
+    width: DEVICE_WIDTH * 0.3,
+  },
+
+  modalContentView: {
+    width: DEVICE_WIDTH * 0.8,
+    height: DEVICE_HEIGHT * 0.3,
+  },
 });
 
 const mapStateToProps = (state) => {

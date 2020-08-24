@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     // backgroundColor: '#F0F0F0',
-    height: DEVICE_WIDTH * 0.15,
+    height: DEVICE_WIDTH * 0.07,
     width: DEVICE_WIDTH * 0.15,
     borderRadius: DEVICE_WIDTH * 0.1,
     justifyContent: 'center',

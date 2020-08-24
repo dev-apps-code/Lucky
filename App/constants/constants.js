@@ -24,6 +24,5 @@ export const GRADIENT_COLOR_SET_2 = {
   LOCATIONS: [0, 0.5],
 };
 
-export const ALPHA = window.width / 375;
+export const alpha = window.width / 375;
 export const FONT_ALPHA = (window.width / 375) * 0.84;
-
