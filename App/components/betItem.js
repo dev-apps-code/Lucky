@@ -1,20 +1,29 @@
 import React, {Component} from 'react';
 
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, View, Image, Text} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../constants/constants';
 import Separator from '../components/separator';
 
 export default class BetItem extends Component {
   componentDidMount() {}
 
+  toMoney = (amount) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  } 
+
   renderItem = (data) => {
     let {bet_amount, digit} = data.item;
     let {index} = data;
+    let formattedAmount = this.toMoney(bet_amount)
     return (
       <View style={styles.mainContainer} key={index}>
         <View style={styles.subContainer}>
           <Text style={styles.digitText}>{digit}</Text>
-          <Text style={styles.amountText}>{bet_amount}</Text>
+          <Image
+            style={styles.phpIcon}
+            source={require('../assets/images/php.png')}
+          />
+          <Text style={styles.amountText}>{formattedAmount}</Text>
         </View>
         <Separator />
       </View>
@@ -27,7 +36,7 @@ export default class BetItem extends Component {
         item,
         index,
       };
-      let returnItem = item.bet_amount > 0 ? this.renderItem(data) : null;
+      let returnItem = item.bet_amount != '0' && item.bet_amount != null ? this.renderItem(data) : null;
       // return <BetItem data={data} key={index} />;
       return returnItem;
     });
@@ -52,6 +61,7 @@ const styles = StyleSheet.create({
   subContainer: {
     flexDirection: 'row',
     width: DEVICE_WIDTH * 0.95,
+    alignItems:'center'
   },
   digitText: {
     fontSize: DEVICE_HEIGHT * 0.027,
@@ -65,6 +75,13 @@ const styles = StyleSheet.create({
     color: '#0C3B2E',
     fontFamily: 'Alata-Regular',
     fontWeight: 'bold',
-    marginLeft: DEVICE_WIDTH * 0.38,
+    marginLeft: DEVICE_WIDTH * 0.02,
   },
+  phpIcon: {
+    marginLeft: DEVICE_WIDTH * 0.38,
+    tintColor: '#6D9773',
+    width: DEVICE_WIDTH * 0.04,
+    resizeMode: 'contain',
+  },
+
 });
